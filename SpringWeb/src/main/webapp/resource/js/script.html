@@ -239,6 +239,9 @@ function calcApp(){
 			window.addEventListener("load", function() {
 		
 				var moveUpButton = document.querySelector("#move-up-button");
+				var radioButton = document.querySelector("");
+				var checkedId = 0;
+				
 				var container = document.querySelector("#move-up-container");
 				var tbody =container.querySelector("tbody");
 					 /* td 찾는 두가지 방법 */
@@ -258,53 +261,116 @@ function calcApp(){
 					// alert("td");
 				//	e.stopPropagation();
 					
-					console.log("td");
+					//console.log("td");
 					e.target.style.background="green";
 				 },false);
 				 
 				tbody.addEventListener("click", function(e){
-						 console.log("tbody");
+						// console.log("tbody");
 						/* e.target.style.background = "blue"; */
 						//alert("target: "+e.target.nodeName+", current: "+ e.currentTarget.nodeName);
 						//alert("tbody");
-						e.target.style.background="pink";
+						//e.target.style.background="pink";
+			/* 			if(e.target ==?){
+							checkedId = .value;
+						}
+			 */			
 						
 					},true);
 					
 				moveUpButton.onclick = function() {
+					
+					alert("");
+					
 				 
 				}
-
+				
 				
 			});
+			
+//---- 기본 행위 막기 예제-------------------------------------------------------------------------------
+	window.addEventListener("load", function(){
+		var titleText = document.querySelector("form input[name]");
+		var submitButton = document.querySelector("form input[type='submit']");
+		var cancelButton =document.querySelector("form a");
+		submitButton.onclick = function(e){
+			if(titleText.value ==""){
+				alert("제목을 입력하세요");
+				e.preventDefault();				
+			}
+			
+		}
+		
+		cancelButton.onclick = function(e){
+			if(titleText.value !=""){
+				var con = confirm("작성중이던 입력을 취소하시겠습니까?");
+				if(con == false)
+					e.preventDefault();
+				/* 
+				if(confirm("작성중이던 입력을 취소하시겠습니까?"))
+					e.preventDefault();
+				*/
+				
+					
+			}
+		}
+	});
+
 </script>
 
 </head>
 <body>
-	<!-- ---------------------노드 바꾸기 예제2 ---------------------------------->
+	<!-- ------------------기본행위막기 예제 ---------------------------------->
+	<form>
+		<input type="text" name="title"/><br/>
+		<input type="submit" value="전송"/>
+		<a href="">취소</a>
+	</form>	
+	<hr/>
+	<!-- ---------------------노드 바꾸기 예제2 + 이벤트 심화 : 버블링과 캡처링 ---------------------------------->
 	<input id="move-up-button" type="button" value="위로 옮기기">
 	<div id="move-up-container">
 		<table border="1">
 			<thead>
 				<tr>
+					<td></td>
 					<td>코드</td>
 					<td>제목</td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td><input name="id" type="radio" value="1"/></td>
 					<td>1</td>
 					<td>제목1~~~~~~~~~~~~~~</td>
 				</tr>
 				<tr>
+					<td><input name="id" type="radio" value="2"/></td>
 					<td>2</td>
 					<td>222222222##################################################################</td>
 				</tr>	
+				<tr>
+					<td><input name="id" type="radio" value="3"/></td>
+					<td>3</td>
+					<td>집에가야지</td>
+				</tr>	
+				<tr>
+					<td><input name="id" type="radio" value="4"/></td>
+					<td>4</td>
+					<td>추석#</td>
+				</tr>	
+				<tr>
+					<td><input name="id" type="radio" value="5"/></td>
+					<td>5</td>
+					<td>~~~~~~추서어어억~~~~~</td>
+				</tr>	
+				
 			</tbody>
 		</table>
 	
 	</div>
-	<hr/><!-- ---------------------노드 바꾸기 예제 ---------------------------------->
+	<hr/>
+	<!-- ---------------------노드 바꾸기 예제 ---------------------------------->
 	<input id="swap-node-button" type="button" value="노드 바꾸기">
 	<div id="node-swap-container">
 	<img src="../images/answeris.png" /><img src="../images/w3c.png" /><img src="../images/microsoft.png" />
