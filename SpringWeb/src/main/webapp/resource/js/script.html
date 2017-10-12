@@ -360,11 +360,42 @@ function calcApp(){
 			var tbody = document.querySelector("#ex2-clone tbody");
 			var template = document.querySelector("#ex2-clone template");
 			
+			var data = [
+				{id:"11", title:"자바스크립",writerId:"yeonjoo"},
+				{id:"22", title:"자바스크립트",writerId:"yeonjooyeonjoo"},
+				{id:"33", title:"자바스크립트트",writerId:"yeonjooyeonjooyeonjoo"}
+			];
+			
+			
 			cloneButton.onclick = function(e){
 				
-				
-				if('content' in template)
-					alert("현재 브라우저가 template을 지원하고있습니다");
+				if('content' in template){
+//					alert("현재 브라우저가 template을 지원하고있습니다");
+					/* 
+					 //template의 content에 값을 설정
+					var tds = template.content.querySelectorAll("td");
+					tds[0].appendChild(document.createTextNode("1"));
+					tds[1].appendChild(document.createTextNode("test title"));
+					tds[2].textContent = "newlec";
+					// 값을 설정된 content에 복사
+					var clone = document.importNode(template.content, true);
+					  */
+					for(var i=0; i<data.length;i++){
+						
+					var clone = document.importNode(template.content, true);
+					var tds = clone.querySelectorAll("td");
+					tds[0].appendChild(document.createTextNode(data[i].id));
+					tds[1].textContent = data[i].title;
+					tds[2].textContent = data[i].writerId; 
+					
+					//복제된 clone(tr)을 노드 트리에 추가
+					tbody.appendChild(clone);
+					
+					}
+					
+					
+					
+				}
 				
 				
 				
@@ -399,17 +430,18 @@ function calcApp(){
 			<tbody>
 			</tbody>
 			</table>
-			<template id="">
-				<tr>
-					<td><input name="id" type="radio" value="1"/></td>
-					<td>1</td>
-					<td>제목1~~~~~~~~~~~~~~</td>
-				</tr>
-			</template>
+			
 		
 	
 	</div>
-	
+	<template>
+				<tr>
+					<td><input name="id" type="radio" value="1"/></td>
+					<td></td>
+					<td></td>
+					
+				</tr>
+			</template>
 	</div>
 	<!-- 노드 복제 예제 -->
 	<div id="ex-clone">
@@ -429,6 +461,7 @@ function calcApp(){
 			<tbody>
 				<tr>
 					<td><input name="id" type="radio" value="1"/></td>
+					
 					<td>1</td>
 					<td>제목1~~~~~~~~~~~~~~</td>
 				</tr>

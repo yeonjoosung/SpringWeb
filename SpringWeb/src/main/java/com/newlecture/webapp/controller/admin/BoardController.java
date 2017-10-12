@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.newlecture.webapp.dao.NoticeDao;
+import com.newlecture.webapp.dao.NoticeFileDao;
 import com.newlecture.webapp.entity.Notice;
+import com.newlecture.webapp.entity.NoticeFile;
 import com.newlecture.webapp.entity.NoticeView;
 
 @Controller
@@ -35,6 +37,8 @@ public class BoardController {
 	
 	@Autowired
 	private NoticeDao noticeDao;
+	@Autowired
+	private NoticeFileDao noticeFileDao;
 	
 	@RequestMapping("notice")
 	public String notice(
@@ -119,10 +123,10 @@ public class BoardController {
 		
 		fis.close();
 		fos.close();
-		
-/*		file.getInputStream();
+//		file.getInputStream();
 		String fileName = file.getOriginalFilename();
-		System.out.println(fileName);*/
+		
+//		System.out.println(fileName);
 		
 		String writerId = "newlec";
 	//	System.out.println(notice.getTitle());
@@ -130,6 +134,10 @@ public class BoardController {
 		int row = noticeDao.insert(notice);
 	//	int row = noticeDao.insert(title,content,writerId);
 	//	int row2 = noticeDao.insert(new Notice(title,content,writerId));
+		
+		noticeFileDao.insert(new NoticeFile(null,fileName,nextId));
+		
+		
 		
 		return "redirect:../notice";
 	}
