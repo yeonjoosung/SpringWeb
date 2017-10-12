@@ -239,7 +239,7 @@ function calcApp(){
 			window.addEventListener("load", function() {
 		
 				var moveUpButton = document.querySelector("#move-up-button");
-				var radioButton = document.querySelector("");
+				//var radioButton = document.querySelector("input[type='radio']");
 				var checkedId = 0;
 				
 				var container = document.querySelector("#move-up-container");
@@ -247,7 +247,7 @@ function calcApp(){
 					 /* td 찾는 두가지 방법 */
 			//	var td = tbody.querySelector("tr:first-child td:last-child");
 				var td = tbody.firstElementChild.lastElementChild;//
-				 
+				var tr = null;
 				
 				/* var trs =container.querySelectorAll("tbody tr");
 				for(var i=0;i<trs.length;i++){
@@ -266,6 +266,18 @@ function calcApp(){
 				 },false);
 				 
 				tbody.addEventListener("click", function(e){
+					
+					//console.log(e.target.nodeName);
+					  if(e.target.nodeName == "INPUT") {
+							//alert("라디오 버튼 클릭");
+							//tr = e.target.parentNode.parentNode;//parentElement 는 td까지 parentNode는 tr까지
+							tr = e.target.parentNode.parentNode;
+							
+							//console.log(tr2);
+							
+							//tr2.style.background = "pink";
+//					  		tr.style.background = "pink";
+					  }
 						// console.log("tbody");
 						/* e.target.style.background = "blue"; */
 						//alert("target: "+e.target.nodeName+", current: "+ e.currentTarget.nodeName);
@@ -279,8 +291,23 @@ function calcApp(){
 					},true);
 					
 				moveUpButton.onclick = function() {
+					if(tr == null){
+						
+						
+						return alert("d");
+					}
+						
 					
-					alert("");
+					
+					
+					//var tr2 = e.target.parentElement.parentElement.previousElementSibling;
+					//nextElementSibling;
+					
+					var bf = tr.previousElementSibling;
+					var af = tr.nextElementSibling;
+					var container = tr.parentNode;//tbody
+					container.replaceChild(tr, bf);
+					container.insertBefore(bf, af);
 					
 				 
 				}
@@ -296,7 +323,7 @@ function calcApp(){
 		submitButton.onclick = function(e){
 			if(titleText.value ==""){
 				alert("제목을 입력하세요");
-				e.preventDefault();				
+				e.preventDefault();		//화면 갱신을 막음		
 			}
 			
 		}
@@ -315,11 +342,103 @@ function calcApp(){
 			}
 		}
 	});
-
+	
+	//---- 노드 복제 예제-------------------------------------------------------------------------------
+		window.addEventListener("load", function(){
+			var cloneButton =document.querySelector("#ex-clone input[value='단순복제']");
+			var tbody = document.querySelector("#ex-clone tbody");
+			
+			cloneButton.onclick = function(e){
+				var tr = tbody.querySelector("tr");
+				var clone = tr.cloneNode(true);
+				tbody.appendChild(clone);
+			}
+		});
+	//---- template 태그이용한 노드 복제 예제-------------------------------------------------------------------------------
+		window.addEventListener("load", function(){
+			var cloneButton =document.querySelector("#ex2-clone input[value='단순복제']");
+			var tbody = document.querySelector("#ex2-clone tbody");
+			var template = document.querySelector("#ex2-clone template");
+			
+			cloneButton.onclick = function(e){
+				
+				
+				if('content' in template)
+					alert("현재 브라우저가 template을 지원하고있습니다");
+				
+				
+				
+				/* var obj ={kor:30, eng:40, math:50};
+				
+				obj.com = 60;
+				
+				if('com' in obj)
+					alert(obj.com+obj.kor);
+				 */
+			}
+		});
 </script>
 
 </head>
 <body>
+<!-- template 태그를 이용한 노드 복제 예제 -->
+	<div id="ex2-clone">
+	<div>
+		<input type="button" value="단순복제"/>
+	</div>
+	
+	<div id="clone-container">
+		<table border="1">
+			<thead>
+				<tr>
+					<td></td>
+					<td>코드</td>
+					<td>제목</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			</table>
+			<template id="">
+				<tr>
+					<td><input name="id" type="radio" value="1"/></td>
+					<td>1</td>
+					<td>제목1~~~~~~~~~~~~~~</td>
+				</tr>
+			</template>
+		
+	
+	</div>
+	
+	</div>
+	<!-- 노드 복제 예제 -->
+	<div id="ex-clone">
+	<div>
+		<input type="button" value="단순복제"/>
+	</div>
+	
+	<div id="clone-container">
+		<table border="1">
+			<thead>
+				<tr>
+					<td></td>
+					<td>코드</td>
+					<td>제목</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input name="id" type="radio" value="1"/></td>
+					<td>1</td>
+					<td>제목1~~~~~~~~~~~~~~</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	</div>
+	
+	</div>
+	
 	<!-- ------------------기본행위막기 예제 ---------------------------------->
 	<form>
 		<input type="text" name="title"/><br/>

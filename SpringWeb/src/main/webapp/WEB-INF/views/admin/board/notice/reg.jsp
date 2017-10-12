@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>등록 페이지</h1>
-	<form method="post" ><!--action="notice-reg"  enctype="multipart/form-data"  -->
+	<form method="post" enctype="multipart/form-data" ><!--action="notice-reg"    -->
 		<fieldset>
 			<legend>공지사항 수정정보 필드</legend>
 			<table border="1">
@@ -21,10 +21,7 @@
 						<td>첨부파일</td>
 						<td><input type="file" name="file" /></td>
 					</tr>
-					<tr>
-						<td>첨부파일</td>
-						<td><input type="file" name="file" /></td>
-					</tr>
+					
 					<tr>
 						<td colspan="2"><textarea name="content" rows="20" cols="60"></textarea>
 

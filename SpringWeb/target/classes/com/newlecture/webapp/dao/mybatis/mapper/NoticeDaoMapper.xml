@@ -17,6 +17,22 @@
 		where id &gt; CAST(#{id} AS UNSIGNED) 
 		order by regDate asc limit 1;
 	</select>
+	
+	<select id="getNextId" resultType="String">
+		select ifnull(max(cast(id as unsigned)),0) + 1  
+				from Notice
+	</select>
+	
+	<insert id="insert" parameterType="com.newlecture.webapp.entity.Notice">
+		<selectKey order="BEFORE" keyProperty="id" resultType="String">
+			select ifnull(max(cast(id as unsigned)),0) + 1  
+			from Notice
+		</selectKey>
+		
+		insert into Notice(id,title,content,writerId)
+		values(#{id}, #{title}, #{content}, #{writerId});
+	</insert>
+	
 	<!--  <select id="get" resultType="com.newlecture.webapp.entity.NoticeView">
 		select * from NoticeView where id=#{id}
 	</select>  -->

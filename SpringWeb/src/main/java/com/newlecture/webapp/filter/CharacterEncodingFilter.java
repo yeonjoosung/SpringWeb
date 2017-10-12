@@ -13,14 +13,16 @@ public class CharacterEncodingFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		System.out.println("hello filter");
+		//서블릿이후 필터실행 전 실행
+		//System.out.println("헬로우 필터");
 		
+		//request.setCharacterEncoding("UTF-8");
 		chain.doFilter(request,response);
 		
-		System.out.println("bye~~filter");
+		
+		//필터 실행후 실행
+		//System.out.println("bye~~filter");
 		
 	}
-	
-	
 
 }
