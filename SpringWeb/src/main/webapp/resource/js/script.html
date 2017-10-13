@@ -366,7 +366,10 @@ function calcApp(){
 				{id:"33", title:"자바스크립트트",writerId:"yeonjooyeonjooyeonjoo"}
 			];
 			
-			
+			ajaxButton.onclick = function(e){
+				var xhr = new XMLHttpRequest();
+				
+			}
 			cloneButton.onclick = function(e){
 				
 				if('content' in template){
@@ -390,15 +393,9 @@ function calcApp(){
 					
 					//복제된 clone(tr)을 노드 트리에 추가
 					tbody.appendChild(clone);
-					
 					}
 					
-					
-					
 				}
-				
-				
-				
 				/* var obj ={kor:30, eng:40, math:50};
 				
 				obj.com = 60;

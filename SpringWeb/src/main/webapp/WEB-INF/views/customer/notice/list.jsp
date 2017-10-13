@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-		<main class="main" ng-controller="notice-controller">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+		<main class="main" ><!-- ng-controller="notice-controller"  -->
 			<h2 class="main title">공지사항</h2>
 			
 			<div class="breadcrumb">
@@ -50,9 +52,9 @@
 						<td class="title indent"><a href="notice/${n.id}">${n.title}</a></td>
 						<td>newlec</td>
 						<td>
-							<fmt:formatDate pattern="yyyy-MM-dd" value="2017-02-28"/>		
+							<fmt:formatDate pattern="yyyy-MM-dd" value="${n.regDate}" />		
 						</td>
-						<td>12</td>
+						<td></td>
 					</tr>
 					</c:forEach>
 					</tbody>
