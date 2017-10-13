@@ -4,7 +4,30 @@
   <artifactId>SpringWeb</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  
+
+  <build>
+<!--     <sourceDirectory>src</sourceDirectory> -->    
+		<plugins>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.1</version>
+                <configuration>
+                    <source>1.8</source><!-- 내가 쓰는 자바 버전 넣기 -->
+                    <target>1.8</target><!-- 내가 쓰는 자바 버전 넣기 -->
+                </configuration>
+        </plugin>
+        <!-- <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+                <warSourceDirectory>WebContent</warSourceDirectory>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin> -->
+    </plugins>
+</build>
+
+
   <dependencies>
     <dependency>
         <groupId>org.springframework</groupId>
