@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -395,7 +397,7 @@ function calcApp(){
 				
 				var img = document.createElement("img");
 				img.src= "../images/ajax-loader.gif";
-				container.appe*/ndChild(img);
+				container.appendChild(img);
 				
 				
 				
@@ -455,7 +457,7 @@ function calcApp(){
 	<div id="ex3-clone">
 		<form action="../../upload" method="post" enctype="multipart/form-data">
 			<div>
-				<input type="text" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+				<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				<input type="submit" value="전송"/>
 				<input type="button" value=""/>
 			</div>
