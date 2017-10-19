@@ -42,8 +42,10 @@ public class SpringNoticeDao implements NoticeDao {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "select count(id) 'count' from Notice";
+		int count = template.queryForObject(sql, Integer.class);
+		
+		return count;
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class SpringNoticeDao implements NoticeDao {
 						
 						NoticeView notice = new NoticeView();
 						notice.setId(rs.getString("id"));
-						notice.setTitle(rs.getString("title")+"¸Þ·Õ");
+						notice.setTitle(rs.getString("title")+"¸Þ·Õ·Õ");
 						notice.setWriterId(rs.getString("writerId"));
 						notice.setContent(rs.getString("content"));
 						notice.setHit(0);

@@ -31,6 +31,7 @@ public class CustomerController {
 		
 		List<NoticeView> list = noticeDao.getList(page, field, query);
 		model.addAttribute("list", list);
+		model.addAttribute("count",noticeDao.getCount());
 		
 		return "customer.notice.list";
 	}
@@ -56,14 +57,12 @@ public class CustomerController {
 			e.printStackTrace();
 		}
 		
-		/*
-		StringBuilder builer = new StringBuilder();
+		/*StringBuilder builer = new StringBuilder();
 		builer.append("[");
 		builer.append("{\"id\":+list.get(0).getId()+"\", \"title\":\"Hello"},");
 		builer.append("{}");
 		builer.append("}");
-		json= builer.toString();
-		*/
+		json= builer.toString();*/
 		
 		//return "[{id:\"1\"},{id:\"2\"}]";
 		return json;
@@ -75,8 +74,10 @@ public class CustomerController {
 			@PathVariable("id") String id,
 			Model model) {
 		model.addAttribute("n",noticeDao.get(id));
-	/*	model.addAttribute("prev",noticeDao.getPrev(id));
-		model.addAttribute("next",noticeDao.getNext(id));*/
+	/*	
+	    model.addAttribute("prev",noticeDao.getPrev(id));
+		model.addAttribute("next",noticeDao.getNext(id));
+		*/
 		
 		return "customer.notice.detail";
 	}
