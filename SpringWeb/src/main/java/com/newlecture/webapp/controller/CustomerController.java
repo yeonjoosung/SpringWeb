@@ -75,8 +75,8 @@ public class CustomerController {
 			@PathVariable("id") String id,
 			Model model) {
 		model.addAttribute("n",noticeDao.get(id));
-		model.addAttribute("prev",noticeDao.getPrev(id));
-		model.addAttribute("next",noticeDao.getNext(id));
+	/*	model.addAttribute("prev",noticeDao.getPrev(id));
+		model.addAttribute("next",noticeDao.getNext(id));*/
 		
 		return "customer.notice.detail";
 	}
