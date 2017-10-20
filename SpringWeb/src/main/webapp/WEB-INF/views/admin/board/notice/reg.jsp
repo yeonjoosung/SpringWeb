@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +9,7 @@
 </head>
 <body>
 	<h1>등록 페이지</h1>
-	<form method="post" enctype="multipart/form-data" ><!--action="notice-reg"    -->
+	<form action="?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data" ><!--action="notice-reg"    -->
 		<fieldset>
 			<legend>공지사항 수정정보 필드</legend>
 			<table border="1">
@@ -30,6 +31,7 @@
 				</tbody>
 			</table>
 			<div>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="submit" value="등록" />
 				<a href="notice">취소</a>				
 			</div>

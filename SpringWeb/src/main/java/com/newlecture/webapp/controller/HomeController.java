@@ -37,7 +37,6 @@ public class HomeController {
 
 		path += File.separator+file.getOriginalFilename();
 		File f2 = new File(path);
-		
 		InputStream fis = file.getInputStream();
 		OutputStream fos = new FileOutputStream(f2);
 		
@@ -47,10 +46,11 @@ public class HomeController {
 		while((size = fis.read(buf))>0)
 			fos.write(buf, 0, size);
 		
+		System.out.println(path);
 		fis.close();
 		fos.close();
 		
-		return "";
+		return title;
 	}
 
 }

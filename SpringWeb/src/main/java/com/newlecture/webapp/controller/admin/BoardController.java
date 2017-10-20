@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.newlecture.webapp.dao.MemberDao;
 import com.newlecture.webapp.dao.NoticeDao;
 import com.newlecture.webapp.dao.NoticeFileDao;
 import com.newlecture.webapp.entity.Notice;
@@ -39,6 +41,9 @@ public class BoardController {
 	private NoticeDao noticeDao;
 	@Autowired
 	private NoticeFileDao noticeFileDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@RequestMapping("notice")
 	public String notice(
@@ -71,7 +76,10 @@ public class BoardController {
 	public String noticeReg(Notice notice,
 			String aa,
 			MultipartFile file,
-			HttpServletRequest request) throws IOException {
+			HttpServletRequest request,
+			Principal principal) throws IOException {
+		
+		
 		//CommonsMultipartFile 객체형식, MultipartFile 인터페이스 형식
 		
 		//title = new String(title.getBytes("ISO-8859-1"),"UTF-8");
@@ -96,8 +104,6 @@ public class BoardController {
 				String.format("/resource/customer/notice/%d/%s",year,nextId)
 				);
 		System.out.println("path: "+path);
-		
-		
 		File f = new File(path);
 		System.out.println("f: "+f);
 		if(!f.exists()) {
@@ -105,7 +111,6 @@ public class BoardController {
 				System.out.println("디렉토리 생성 불가");
 			//f. make directory
 		}
-		
 		path += File.separator+file.getOriginalFilename();
 		//File.separator : 파일 구분자 windows => \ ,리눅스 = /
 		File f2 = new File(path);
@@ -132,14 +137,29 @@ public class BoardController {
 	//	System.out.println(notice.getTitle());
 		notice.setWriterId(writerId);
 		int row = noticeDao.insert(notice);
+		memberDao.pointUp(principal.getName());
 	//	int row = noticeDao.insert(title,content,writerId);
 	//	int row2 = noticeDao.insert(new Notice(title,content,writerId));
-		
-		noticeFileDao.insert(new NoticeFile(null,fileName,nextId));
-		
-		
+
+	//		noticeFileDao.insert(new NoticeFile(null,fileName,nextId));
 		
 		return "redirect:../notice";
 	}
-	
+	@RequestMapping(value="edit/{id}", method=RequestMethod.GET)
+	public String noticeEdit(
+			@PathVariable("id") String id,
+			Model model) {
+		model.addAttribute("n",noticeDao.get(id));
+		
+		return "admin.board.notice.edit";
+	}
+/*	@RequestMapping(value="notice/edit", method=RequestMethod.POST)
+	public String noticeEdit(Notice notice,
+			HttpServletRequest request,
+			Principal principal) throws IOException {
+		
+		int row = noticeDao.update(notice.getId(), notice.getTitle(), notice.getContent());
+		
+		return "redirect:../notice/detail";
+	}*/
 }

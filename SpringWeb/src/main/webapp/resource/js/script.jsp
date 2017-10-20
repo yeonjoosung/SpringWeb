@@ -1,12 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
 <script type="text/javascript">
+
+
+
+
+
 
 function calcApp(){
 	
@@ -363,22 +367,21 @@ function calcApp(){
 			var tbody = document.querySelector("#ex2-clone tbody");
 			var template = document.querySelector("#ex2-clone template");
 			var container = document.querySelector("#ex2-clone div:first-child");
-			
-			
 			var data = [
 				{id:"11", title:"자바스크립",writerId:"yeonjoo"},
 				{id:"22", title:"자바스크립트",writerId:"yeonjooyeonjoo"},
 				{id:"33", title:"자바스크립트트",writerId:"yeonjooyeonjooyeonjoo"}
+				
 			];
 			
 			ajaxButton.onclick = function(e){
 				
 				// **2. 비동기형 문서 요청
-				var xhr = new XMLHttpRequest();
 				/* xhr.onreadystatechange = function(e){
 					if(xhr.readayState == 4)
 						data = eval(xhr.responseText);
 				} */
+				var xhr = new XMLHttpRequest();
 				xhr.onload = function(){
 					//alert(xhr.responseText);
 					//data = eval(xhr.responseText);
@@ -390,7 +393,7 @@ function calcApp(){
 				xhr.onerror = function(e){
 					alert("예기치못한오류가발생하였습니다.");
 				}
-				xhr.open("GET", "../../customer/notice-ajax",true);
+				xhr.open("GET", "../../customer/notice-ajax", true);
 				xhr.send();
 				
 				// 1. ajax icon 추가
@@ -398,10 +401,6 @@ function calcApp(){
 				var img = document.createElement("img");
 				img.src= "../images/ajax-loader.gif";
 				container.appendChild(img);
-				
-				
-				
-				
 				// **1. 동기형 문서 요청
 				/* 
 				var xhr = new XMLHttpRequest();
@@ -412,7 +411,6 @@ function calcApp(){
 				data = eval(xhr.responseText); 
 				*/
 			}
-			
 			
 			cloneButton.onclick = function(e){
 				
@@ -441,23 +439,90 @@ function calcApp(){
 					
 				}
 				/* var obj ={kor:30, eng:40, math:50};
-				
 				obj.com = 60;
-				
 				if('com' in obj)
 					alert(obj.com+obj.kor);
 				 */
 			}
+			
 		});
+	/* Ajax로 파일 전송하기와 트리거 */
+		window.addEventListener("load", function(){
+			var fileInput = document.querySelector("#ex3-upload input");
+			var submitButton =document.querySelector("#ex3-upload span");
+			
+			submitButton.onclick = function(e) {
+				var event = new MouseEvent("click", {
+					'view': window,
+					'bubbles': true,
+					'cancelable':true
+				});
+				fileInput.dispatchEvent(event);
+				fileInput.onchange = function(){
+					var file = fileInput.files[0];
+					var formData = new FormData();
+					formData.append("title", "테스트");
+					formData.append("file", file);
+					
+					var xhr = new XMLHttpRequest();
+					xhr.upload.onprogress = function(e){
+						console.log(e.loaded);
+					}
+					xhr.onload = function(){
+						
+					}
+					xhr.onerror = function(e){
+						alert("예기치 못한 오류가 발생.");
+						
+					}
+					xhr.open("POST","../../upload?${_csrf.parameterName}=${_csrf.token}");
+					xhr.send(formData);
+					
+					/* for(var key in fileInput.files[0])
+						alert(key); */
+				}
+			};
+				
+			
+		});
+		
+		
 </script>
 
 </head>
-<body>
-<!-- Ajax로 파일 전송하기 -->
-	<div id="ex3-clone">
-		<form action="../../upload" method="post" enctype="multipart/form-data">
+<body><!-- Ajax로 파일 전송하기와 트리거 -->
+	<div id="ex3-upload">
+		<input type="file" style="display: none;"/>
+		<span style="border:1px solid #999; border-radius: 5px; background: pink; padding: 3px; cursor: pointer;">파일선택</span>
+		<%-- <form action="../../upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 			<div>
-				<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+			<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+				<input type="submit" value="전송"/>
+				<input type="button" value=""/>
+			</div>
+			
+			<div id="clone-container">
+				<table border="1">
+					<tbody>
+						<tr>
+							<td>제목</td>
+							<td><input type="text" name="title" /></td>
+						</tr>
+						<tr>
+							<td>첨부파일</td>
+							<td><input type="file" name="file" /></td>
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+		</form> --%>
+	</div>
+<%-- <!-- Ajax로 파일 전송하기 -->
+	<div id="ex3-clone">
+		<form action="../../upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+			<div>
+			<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 				<input type="submit" value="전송"/>
 				<input type="button" value=""/>
 			</div>
@@ -478,7 +543,7 @@ function calcApp(){
 				</table>
 			</div>
 		</form>
-	</div>
+	</div> --%>
 <!-- template 태그를 이용한 노드 복제 예제 -->
 	<div id="ex2-clone">
 	<div>

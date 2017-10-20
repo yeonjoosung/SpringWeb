@@ -27,7 +27,7 @@
 					</tr>
 					<tr>
 						<td colspan="2"><textarea name="content" rows="20" cols="60">${n.content}</textarea>
-
+						
 						</td>
 					</tr>
 				</tbody>

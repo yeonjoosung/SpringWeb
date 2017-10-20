@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 	<h2>수정 페이지</h2>
 	<form action="notice-edit" method="post">
 		<fieldset>
-			<legend>공지사항 수정정보 필드</legend>
+			<legend>공지사항 수정정보 필드${n.title}</legend>
 			<table border="1">
 				<tbody>
 					<tr>
@@ -13,14 +14,9 @@
 						<td colspan="3"><input type="text" name="title" value="${n.title}" /></td>
 					</tr>
 					<tr>
-						<td>작성일</td>
-						<td colspan="3">${n.regDate}</td>
-					</tr>
-					<tr>
 						<td>작성자</td>
 						<td>${n.writer}</td>
-						<td>조회수</td>
-						<td>${n.hit}</td>
+						
 					</tr>
 					<tr>
 						<td>첨부파일</td>
