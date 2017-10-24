@@ -92,7 +92,6 @@ public class CustomerController {
 			e.printStackTrace();
 		}
 		
-		StringBuilder builder = new StringBuilder();
 
 		return json;
 	}

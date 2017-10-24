@@ -32,11 +32,16 @@ import com.newlecture.webapp.dao.NoticeFileDao;
 import com.newlecture.webapp.entity.Notice;
 import com.newlecture.webapp.entity.NoticeFile;
 import com.newlecture.webapp.entity.NoticeView;
+import com.newlecture.webapp.service.admin.BoardService;
 
 @Controller
 @RequestMapping("/admin/board/*")
 public class BoardController {
 	
+	@Autowired
+	private BoardService service;
+	/*
+	 * board service·Î 
 	@Autowired
 	private NoticeDao noticeDao;
 	@Autowired
@@ -44,14 +49,14 @@ public class BoardController {
 	
 	@Autowired
 	private MemberDao memberDao;
-	
+	*/
 	@RequestMapping("notice")
 	public String notice(
 			@RequestParam(value = "p", defaultValue = "1") Integer page,
 			@RequestParam(value = "f", defaultValue = "title") String field,
 			@RequestParam(value = "q", defaultValue = "") String query, 
 			Model model) {
-		List<NoticeView> list = noticeDao.getList(page, field, query);
+		List<NoticeView> list = service.getNoticeList();
 		model.addAttribute("list", list);
 		return "admin.board.notice.list";
 	}
@@ -60,9 +65,9 @@ public class BoardController {
 	public String noticeDetail(
 			@PathVariable("id") String id,
 			Model model) {
-		model.addAttribute("n",noticeDao.get(id));
-		model.addAttribute("prev",noticeDao.getPrev(id));
-		model.addAttribute("next",noticeDao.getNext(id));
+		model.addAttribute("n",service.getNotice(id));
+		model.addAttribute("prev",service.getNoticePrev(id));
+		model.addAttribute("next",service.getNoticeNext(id));
 		
 		return "admin.board.notice.detail";
 	}
@@ -97,7 +102,7 @@ public class BoardController {
 		String year = fmt.format(curDate);
 		*/
 		
-		String nextId = noticeDao.getNextId();
+		String nextId = service.getNoticeNextId();
 		
 		ServletContext ctx = request.getServletContext();
 		String path = ctx.getRealPath(
@@ -133,11 +138,15 @@ public class BoardController {
 		
 //		System.out.println(fileName);
 		
-		String writerId = "newlec";
+		String writerId = "yeonjoo";
 	//	System.out.println(notice.getTitle());
 		notice.setWriterId(writerId);
-		int row = noticeDao.insert(notice);
-		memberDao.pointUp(principal.getName());
+		
+		
+		System.out.println("principal name:"+principal.getName());
+		int row = service.insertAndPointUp(notice);
+		
+	//	memberDao.pointUp(principal.getName());
 	//	int row = noticeDao.insert(title,content,writerId);
 	//	int row2 = noticeDao.insert(new Notice(title,content,writerId));
 
@@ -145,21 +154,28 @@ public class BoardController {
 		
 		return "redirect:../notice";
 	}
-	@RequestMapping(value="edit/{id}", method=RequestMethod.GET)
+	
+	
+/*	
+	@RequestMapping(value="notice/edit/{id}", method=RequestMethod.GET)
 	public String noticeEdit(
 			@PathVariable("id") String id,
 			Model model) {
-		model.addAttribute("n",noticeDao.get(id));
+		model.addAttribute("n",service.getNotice(id));
 		
 		return "admin.board.notice.edit";
 	}
-/*	@RequestMapping(value="notice/edit", method=RequestMethod.POST)
-	public String noticeEdit(Notice notice,
+	@RequestMapping(value="notice/edit/{id}", method=RequestMethod.POST)
+	public String noticeEdit(@PathVariable("id") String id,
+			String title, String content,
 			HttpServletRequest request,
 			Principal principal) throws IOException {
 		
-		int row = noticeDao.update(notice.getId(), notice.getTitle(), notice.getContent());
+	//	int row = noticeDao.update(id,title, content);
 		
-		return "redirect:../notice/detail";
-	}*/
+		return "redirect:../{id}";
+	}
+	*/
+	
+	
 }

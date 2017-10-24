@@ -7,11 +7,6 @@
 
 <script type="text/javascript">
 
-
-
-
-
-
 function calcApp(){
 	
 	var xText = document.getElementById("x");
@@ -450,7 +445,8 @@ function calcApp(){
 		window.addEventListener("load", function(){
 			var fileInput = document.querySelector("#ex3-upload input");
 			var submitButton =document.querySelector("#ex3-upload span");
-			
+			var progressBar = document.querySelector("#ex3-upload #progress-bar");
+			progressBar.style.width ="0px";
 			submitButton.onclick = function(e) {
 				var event = new MouseEvent("click", {
 					'view': window,
@@ -466,8 +462,16 @@ function calcApp(){
 					
 					var xhr = new XMLHttpRequest();
 					xhr.upload.onprogress = function(e){
-						console.log(e.loaded);
+						//console.log(Math.round(e.loaded*100/e.total)+"%");
+						//progressBar.innerHTML = Math.round(e.loaded*100/e.total);
+						var percentage = Math.round(e.loaded*100/e.total);
+						progressBar.textContent = percentage +"%";
+						progressBar.style.width = percentage +"px";
+						progressBar.style.background = "pink";
+											
+						
 					}
+					
 					xhr.onload = function(){
 						
 					}
@@ -494,6 +498,7 @@ function calcApp(){
 	<div id="ex3-upload">
 		<input type="file" style="display: none;"/>
 		<span style="border:1px solid #999; border-radius: 5px; background: pink; padding: 3px; cursor: pointer;">파일선택</span>
+		<span id="progress-bar" ></span>
 		<%-- <form action="../../upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 			<div>
 			<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
@@ -517,6 +522,11 @@ function calcApp(){
 				</table>
 			</div>
 		</form> --%>
+		<div>
+		<ul>
+<!-- 		<li>ajax-icon.gif</li> -->
+		</ul>
+		</div>
 	</div>
 <%-- <!-- Ajax로 파일 전송하기 -->
 	<div id="ex3-clone">

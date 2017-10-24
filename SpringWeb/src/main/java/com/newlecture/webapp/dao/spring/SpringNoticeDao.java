@@ -12,6 +12,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.newlecture.webapp.dao.NoticeDao;
 import com.newlecture.webapp.entity.Notice;
@@ -22,11 +29,25 @@ public class SpringNoticeDao implements NoticeDao {
 	@Autowired
 	private JdbcTemplate template;
 	
+	
+	/*
+	//transaction 贸府规过1 , transaction阑 流立荤侩窍绰 规过
+	@Autowired
+	private TransactionTemplate transactionTemplate;
+	@Autowired
+	private PlatformTransactionManager transactionManager;
+	*/
+	
 	/*@Autowired
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 	}
 */
+	//transaction 贸府规过2
+/*	@Autowired
+	private TransactionTemplate transactionTemplate;*/
+
+	
 	@Override
 	public List<NoticeView> getList(int page, String field, String query) {
 		/*
@@ -128,20 +149,93 @@ public class SpringNoticeDao implements NoticeDao {
 		
 		return insert(new Notice(title, content, writerId));
 	}
+	
+	
+	//@transaction 贸府规过 3苞 4锅 (@Transactional)
+	
+	//transaction 贸府规过 3 - AOP荤侩规过
 
+	@Override
+//	@Transactional(propagation = Propagation.REQUIRED)
+	public int insert(Notice notice) {
+		String sql = "insert into Notice(id,title,content,writerId) values(?, ?, ?, ?);";
+		String sql1 = "update Member set point=point+1 where id=?";
+		
+		
+		int result =0;
+		result += template.update(sql,
+						getNextId(),
+						notice.getTitle(),
+						notice.getContent(),
+						notice.getWriterId()
+						);
+		result += template.update(sql1,notice.getWriterId());
+				
+			
+			return result;
+	}
+/*
+	
+	//transaction 贸府规过 2
 	@Override
 	public int insert(Notice notice) {
 		String sql = "insert into Notice(id,title,content,writerId) values(?, ?, ?, ?);";
-		int result = template.update(sql,
-				getNextId(),
-				notice.getTitle(),
-				notice.getContent(),
-				notice.getWriterId()
-				);
+		String sql1 = "update Member set point=point+1 where id=?";
 		
-		return result;
+		
+		int result =0;
+		result = (int) transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				template.update(sql,
+						getNextId(),
+						notice.getTitle(),
+						notice.getContent(),
+						notice.getWriterId()
+						);
+				template.update(sql1,notice.getWriterId());
+				
+			}
+		});
+			
+			return result;
 	}
 
+*/
+	/*//TransactionManager甫 流立 荤侩窍绰 规过 transaction 贸府规过1
+	@Override
+	public int insert(Notice notice) {
+		String sql = "insert into Notice(id,title,content,writerId) values(?, ?, ?, ?);";
+		String sql1 = "update Member set point=point+1 where id=?";
+		
+		
+		DefaultTransactionDefinition def= new DefaultTransactionDefinition();
+		TransactionStatus state =transactionManager.getTransaction(def);
+		
+		try {
+			int result = template.update(sql,
+					getNextId(),
+					notice.getTitle(),
+					notice.getContent(),
+					notice.getWriterId()
+					);
+		
+			result += template.update(sql1,notice.getWriterId());
+			
+			transactionManager.commit(state);
+			return result;
+
+		} catch (Exception e) {
+			
+			transactionManager.rollback(state);
+			throw e;
+				
+		}
+		
+		
+	}
+*/
 	@Override
 	public String getNextId() {
 		String sql = "select ifnull(max(cast(id as unsigned)),0) + 1 from Notice";
