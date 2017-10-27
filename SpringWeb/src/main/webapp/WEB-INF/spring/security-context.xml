@@ -22,9 +22,10 @@
 			data-source-ref="dataSource" 
 			users-by-username-query="select `id`, pwd `password`, 1 enabled from Member where id=?;" 
 			authorities-by-username-query="select id, 'ROLE_USER' authority from Member where id=?"/>
-			<!-- <user-service>
+			<!-- 
+			<user-service>
 				<user name="newlec" password="111" authorities="ROLE_USER,ROLE_ADMIN"/>
-				<user name="yeonjoo" password="111" authorities="ROLE_USER"/>
+				<user name="yeonjoo" password="123" authorities="ROLE_USER"/>
 			</user-service> -->
 		</authentication-provider>
 	</authentication-manager>

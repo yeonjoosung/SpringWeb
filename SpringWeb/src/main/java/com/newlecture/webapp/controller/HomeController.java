@@ -52,5 +52,33 @@ public class HomeController {
 		
 		return title;
 	}
+	@RequestMapping("file-list")
+	@ResponseBody
+	public String fileList(HttpServletRequest request){
+		ServletContext ctx = request.getServletContext();
+		String path = ctx.getRealPath("/resource/upload");
+		
+		StringBuilder json = new StringBuilder();
+		
+		json.append("[");
+		File folder = new File(path);
+		
+		if(folder.isDirectory()) {
+			File[] files = folder.listFiles();
+			for(int i=0;i<files.length;i++) {
+				json.append(String.format("\"%s\"", files[i].getName()));
+				
+				if(i+1 <files.length)
+					json.append(",");
+			}
+				
+		}
+		
+		json.append("]");
+		
+		System.out.println("json:"+json);
+		return json.toString();
+	}
+
 
 }

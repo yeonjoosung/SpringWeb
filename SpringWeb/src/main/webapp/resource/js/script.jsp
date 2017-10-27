@@ -441,12 +441,29 @@ function calcApp(){
 			}
 			
 		});
-	/* Ajax로 파일 전송하기와 트리거 */
+	/* Ajax로 파일 전송하기와 트리거 그리고 파일목록뷰어*/
 		window.addEventListener("load", function(){
 			var fileInput = document.querySelector("#ex3-upload input");
 			var submitButton =document.querySelector("#ex3-upload span");
 			var progressBar = document.querySelector("#ex3-upload #progress-bar");
 			progressBar.style.width ="0px";
+			var fileViewer = document.querySelector("#ex3-upload ul");
+			
+			//파일목록 초기화
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function(e){
+				var files = JSON.parse(xhr.responseText);//["file1.txt", "file2.txt"];
+				//e.target
+				for (var i = 0; i < files.length; i++) {
+					var li = document.createElement("li");
+					li.textContent = files[i];
+					fileViewer.appendChild(li);
+				}
+			};
+			
+			xhr.open("GET", "../../file-list");
+			xhr.send();
+			
 			submitButton.onclick = function(e) {
 				var event = new MouseEvent("click", {
 					'view': window,
@@ -494,7 +511,8 @@ function calcApp(){
 </script>
 
 </head>
-<body><!-- Ajax로 파일 전송하기와 트리거 -->
+<body>
+<!-- Ajax로 파일 전송하기와 트리거 그리고 파일목록뷰어 -->
 	<div id="ex3-upload">
 		<input type="file" style="display: none;"/>
 		<span style="border:1px solid #999; border-radius: 5px; background: pink; padding: 3px; cursor: pointer;">파일선택</span>
@@ -522,9 +540,10 @@ function calcApp(){
 				</table>
 			</div>
 		</form> --%>
+		
 		<div>
 		<ul>
-<!-- 		<li>ajax-icon.gif</li> -->
+ 	<!-- 	<li>ajax-icon.gif</li>  -->
 		</ul>
 		</div>
 	</div>
