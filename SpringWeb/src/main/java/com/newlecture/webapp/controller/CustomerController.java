@@ -85,12 +85,12 @@ public class CustomerController {
 		Gson gson = new Gson();
 		json = gson.toJson(list);
 		
-		try {
+	/*	try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 
 		return json;

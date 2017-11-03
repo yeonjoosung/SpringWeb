@@ -11,7 +11,7 @@ import com.newlecture.webapp.dao.NoticeFileDao;
 import com.newlecture.webapp.entity.Notice;
 import com.newlecture.webapp.entity.NoticeView;
 
-//board controller를 위한 데이터 제공
+//board controller
 public class BoardService {
 	
 	@Autowired
