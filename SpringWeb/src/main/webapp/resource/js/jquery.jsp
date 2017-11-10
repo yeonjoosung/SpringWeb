@@ -356,14 +356,14 @@
 		   ajaxButton.click(function(e){
 		      
 			   /* 3. jQuery.get()으로 문서를 요청한 방식 */
-			  /*  $.get("../../customer/notice-ajax",function(event){
+			    $.get("../../customer/notice-ajax",function(event){
 				   alert(data);
 				 //  alert(json[0].customer);
 				   
 				   
 				   })
-			    */
-			   
+			    
+			   /* 
 			    $.ajaxSetup({
 			    	scriptCharset : "utf-8",
 			    	contentType: "application/x-www-form-urlencoded; charset=UTF-8"
@@ -378,19 +378,21 @@
 	              })
 	             .always(function(){
 	                console.log("공통부분");
-	             });        
+	             });      */   
 			   
 			   /* 2. 비동기형으로 문서를 요청한 방식 */
-		 //     var xhr = new XMLHttpRequest();
+		     
+			   
+			//   var xhr = new XMLHttpRequest();
 		      
 		      
 		      
 		      
-		      /* xhr.onreadystatechange = function(e){
+		      /*  xhr.onreadystatechange = function(e){
 		         if(xhr.readyState == 4)
 		            data = eval(xhr.responseText);
-		      }; */
-		     /*  xhr.onload = function(){
+		      }; 
+		       xhr.onload = function(){
 		         //alert("tt");
 		         data = JSON.parse(xhr.responseText);
 		         // 2. ajax icon 제거
@@ -405,7 +407,7 @@
 		      var img = document.createElement("img");
 		      img.src = "../images/ajax-loader.gif"; 
 	 	      container.appendChild(img); 
-	 	     */
+	 	      */
 		      /* 1. 동기형으로 문서를 요청한 방식 */
 		      /* var xhr = new XMLHttpRequest();
 		      xhr.open("GET", "../../customer/notice-ajax", false);
