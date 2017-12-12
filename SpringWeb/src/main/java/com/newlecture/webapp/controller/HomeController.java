@@ -29,13 +29,14 @@ public class HomeController {
 	@ResponseBody
 	public String upload(String title, MultipartFile file, HttpServletRequest request) throws IOException {
 		
-		System.out.println("Ã·ºÎÆÄÀÏ title :"+title);
+		System.out.println("title :"+title);
 		System.out.println(file.getOriginalFilename());
 		
 		ServletContext ctx = request.getServletContext();
 		String path = ctx.getRealPath("/resource/upload");
 
 		path += File.separator+file.getOriginalFilename();
+		
 		File f2 = new File(path);
 		InputStream fis = file.getInputStream();
 		OutputStream fos = new FileOutputStream(f2);

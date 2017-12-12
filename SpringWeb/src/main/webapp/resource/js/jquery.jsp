@@ -273,7 +273,7 @@
 	   
 	   /* --- 노드복제 예제----------------------------------------------------------------- */
 
-	  $(function(){   
+	  $(function(){
 	      var cloneButton = $("#ex-clone input[value='단순복제']");
 	      var tbody = $("#ex-clone tbody");
 	         
@@ -356,13 +356,18 @@
 		   ajaxButton.click(function(e){
 		      
 			   /* 3. jQuery.get()으로 문서를 요청한 방식 */
-			    $.get("../../customer/notice-ajax",function(event){
-				   alert(data);
-				 //  alert(json[0].customer);
+			    $.get("../../customer/notice-ajax?id="+id,function(event){
+//			    	alert(JSON.parse(data).writerName);
+				   alert(JSON.parse(data)[0].writerName);
+				 // alert(json[0].customer);
 				   
 				   
 				   })
 			    
+				   
+			/* 	     $.get("../../customer/notice-ajax", function(data){
+            alert(JSON.parse(data)[0].writerName);
+            }); */
 			   /* 
 			    $.ajaxSetup({
 			    	scriptCharset : "utf-8",
